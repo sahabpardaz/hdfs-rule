@@ -1,40 +1,33 @@
 package ir.sahab.hdfsrule;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hdfs.DistributedFileSystem;
-import org.junit.rules.ExternalResource;
-import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.MiniDFSCluster;
+import org.junit.jupiter.api.extension.AfterAllCallback;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 /**
- * A JUnit 4 rule for starting an HDFS server on the local machine.
+ * A JUnit 5 extension for starting an HDFS server on the local machine.
  */
-public class HdfsRule extends ExternalResource {
-
+public class HdfsExtension implements BeforeAllCallback, AfterAllCallback {
     private MiniDFSCluster hdfsCluster = null;
     private File miniClusterDataDir = null;
 
     @Override
-    protected void before() throws Throwable {
-        miniClusterDataDir = Files.createTempDirectory("hdfs-").toFile();
-        Configuration conf = new Configuration();
-        conf.set(MiniDFSCluster.HDFS_MINIDFS_BASEDIR, miniClusterDataDir.getAbsolutePath());
-        hdfsCluster = new MiniDFSCluster.Builder(conf).build();
-        hdfsCluster.waitActive();
-    }
-
-    @Override
-    protected void after() {
+    public void afterAll(ExtensionContext context) {
         if (hdfsCluster != null && hdfsCluster.isClusterUp())
             hdfsCluster.shutdown();
         if (miniClusterDataDir != null) {
@@ -44,6 +37,15 @@ public class HdfsRule extends ExternalResource {
                 throw new AssertionError("Failed to delete HDFS mini cluster's data directory.", e);
             }
         }
+    }
+
+    @Override
+    public void beforeAll(ExtensionContext context) throws Exception {
+        miniClusterDataDir = Files.createTempDirectory("hdfs-").toFile();
+        Configuration conf = new Configuration();
+        conf.set(MiniDFSCluster.HDFS_MINIDFS_BASEDIR, miniClusterDataDir.getAbsolutePath());
+        hdfsCluster = new MiniDFSCluster.Builder(conf).build();
+        hdfsCluster.waitActive();
     }
 
     public URI getUri() {
