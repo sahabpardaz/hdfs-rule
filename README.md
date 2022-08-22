@@ -1,5 +1,5 @@
 # HDFS Rule
-A JUnit rule for starting an HDFS server on the local machine.
+This library provides Junit 4 Rule and Junit 5 Extension for starting an HDFS server on the local machine.
 
 ## Sample Usage
 
