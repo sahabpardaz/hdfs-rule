@@ -18,6 +18,10 @@ import java.nio.file.Files;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Base class for creating an embeddable HDFS cluster for using in tests.
+ * It also provides some methods to access the cluster easier.
+ */
 class HdfsBase {
 
     private final Lock lock = new ReentrantLock();

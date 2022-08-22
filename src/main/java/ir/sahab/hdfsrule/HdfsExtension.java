@@ -5,6 +5,9 @@ import org.junit.jupiter.api.extension.*;
 
 /**
  * A JUnit 5 extension for starting an HDFS server on the local machine.
+ * By default, this extension creates a HDFS instance once for a test class and use it for all test methods.
+ * If you want an instance per test method use this constructor {@link #HdfsExtension(TestInstance.Lifecycle)} and set
+ * lifecycle to {@link TestInstance.Lifecycle#PER_METHOD}
  */
 public class HdfsExtension extends HdfsBase implements BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback {
 
