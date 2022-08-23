@@ -1,54 +1,44 @@
 package ir.sahab.hdfsrule;
 
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.hdfs.DistributedFileSystem;
-import org.junit.rules.ExternalResource;
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
+import org.junit.runners.model.MultipleFailureException;
+import org.junit.runners.model.Statement;
 
-import java.io.IOException;
-import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A JUnit 4 rule for starting an HDFS server on the local machine.
  */
-public class HdfsRule extends ExternalResource {
+public class HdfsRule extends HdfsBase implements TestRule {
 
-    private final HdfsBase base = new HdfsBase();
-
-    @Override
-    protected void before() throws Throwable {
-        base.setup();
+    // copied from org.junit.rules.ExternalResource
+    public Statement apply(Statement base, Description description) {
+        return statement(base);
     }
 
-    @Override
-    protected void after() {
-        base.teardown();
+    private Statement statement(final Statement base) {
+        return new Statement() {
+            @Override
+            public void evaluate() throws Throwable {
+                setup();
+
+                List<Throwable> errors = new ArrayList<Throwable>();
+                try {
+                    base.evaluate();
+                } catch (Throwable t) {
+                    errors.add(t);
+                } finally {
+                    try {
+                        teardown();
+                    } catch (Throwable t) {
+                        errors.add(t);
+                    }
+                }
+                MultipleFailureException.assertEmpty(errors);
+            }
+        };
     }
 
-    public URI getUri() {
-        return base.getUri();
-    }
-
-    public void writeString(Path path, String content) throws IOException {
-        base.writeString(path, content);
-    }
-
-    public void write(Path path, byte[] content) throws IOException {
-        base.write(path, content);
-    }
-
-    public String readString(Path path) throws IOException {
-        return base.readString(path);
-    }
-
-    public byte[] read(Path path) throws IOException {
-        return base.read(path);
-    }
-
-    public String getNameNodeAddresses() {
-        return base.getNameNodeAddresses();
-    }
-
-    public DistributedFileSystem getFileSystem() throws IOException {
-        return base.getFileSystem();
-    }
 }
