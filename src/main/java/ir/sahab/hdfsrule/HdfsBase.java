@@ -29,6 +29,7 @@ abstract class HdfsBase {
     private MiniDFSCluster hdfsCluster = null;
     private File miniClusterDataDir = null;
 
+    @SuppressWarnings("java:S5443")
     void setup() throws Exception {
         lock.lock();
         try {
