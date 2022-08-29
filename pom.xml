@@ -20,6 +20,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <cloudera.hadoop.version>2.6.0-cdh5.10.2</cloudera.hadoop.version>
         <cloudera.hadoop.mr.version>2.6.0-mr1-cdh5.10.2</cloudera.hadoop.mr.version>
+
+        <!--        Sonar settings        -->
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.organization>sahabpardaz</sonar.organization>
+        <sonar.projectKey>sahabpardaz_hdfs-rule</sonar.projectKey>
     </properties>
 
     <dependencies>
