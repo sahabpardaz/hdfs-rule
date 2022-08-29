@@ -18,7 +18,7 @@
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <cloudera.hadoop.version>2.6.0-cdh5.10.2</cloudera.hadoop.version>
+        <cloudera.hadoop.version>2.7.0</cloudera.hadoop.version>
         <cloudera.hadoop.mr.version>2.6.0-mr1-cdh5.10.2</cloudera.hadoop.mr.version>
 
         <!--        Sonar settings        -->
