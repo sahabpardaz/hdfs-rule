@@ -24,7 +24,7 @@ public class HdfsRule extends HdfsBase implements TestRule {
             public void evaluate() throws Throwable {
                 setup();
 
-                List<Throwable> errors = new ArrayList<Throwable>();
+                List<Throwable> errors = new ArrayList<>();
                 try {
                     base.evaluate();
                 } catch (Throwable t) {

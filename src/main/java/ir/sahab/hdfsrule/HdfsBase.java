@@ -30,7 +30,7 @@ abstract class HdfsBase {
     private File miniClusterDataDir = null;
 
     @SuppressWarnings("java:S5443")
-    void setup() throws Exception {
+    void setup() throws IOException {
         lock.lock();
         try {
             miniClusterDataDir = Files.createTempDirectory("hdfs-").toFile();
