@@ -1,5 +1,17 @@
 # HDFS Rule
-A JUnit rule for starting an HDFS server on the local machine.
+
+[![Tests](https://github.com/sahabpardaz/hdfs-rule/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/sahabpardaz/hdfs-rule/actions/workflows/maven-verify.yml)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=sahabpardaz_hdfs-rule&metric=coverage)](https://sonarcloud.io/dashboard?id=sahabpardaz_hdfs-rule)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=sahabpardaz_hdfs-rule&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=sahabpardaz_hdfs-rule)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=sahabpardaz_hdfs-rule&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=sahabpardaz_hdfs-rule)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=sahabpardaz_hdfs-rule&metric=security_rating)](https://sonarcloud.io/dashboard?id=sahabpardaz_hdfs-rule)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=sahabpardaz_hdfs-rule&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=sahabpardaz_hdfs-rule)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=sahabpardaz_hdfs-rule&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=sahabpardaz_hdfs-rule)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=sahabpardaz_hdfs-rule&metric=sqale_index)](https://sonarcloud.io/dashboard?id=sahabpardaz_hdfs-rule)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=sahabpardaz_hdfs-rule&metric=alert_status)](https://sonarcloud.io/dashboard?id=sahabpardaz_hdfs-rule)
+[![JitPack](https://jitpack.io/v/sahabpardaz/hdfs-rule.svg)](https://jitpack.io/#sahabpardaz/hdfs-rule)
+
+This library provides Junit 4 Rule and Junit 5 Extension for starting an HDFS server on the local machine.
 
 ## Sample Usage
 
@@ -59,6 +71,19 @@ FileSystem fs = FileSystem.get(configuration);
 fs.close();
 ```
 
+## JUnit 5
+
+You can declare HdfsExtension as follows and use it in your tests.
+
+```java
+@RegisterExtension
+static final HdfsExtension hdfsExtension = new HdfsExtension();
+```
+
 ## Add it to your project
-You can refer to this library by either of java build systems (Maven, Gradle, SBT or Leiningen) using snippets from this jitpack link:
+You can refer to this library by either of java build systems (Maven, Gradle, SBT or Leiningen)
+using snippets from this jitpack link:
 [![](https://jitpack.io/v/sahabpardaz/hdfs-rule.svg)](https://jitpack.io/#sahabpardaz/hdfs-rule)
+
+JUnit 4 and 5 dependencies are marked as optional, so you need to provide JUnit 4 or 5 dependency
+(based on what version you need, and you use) in you project to make it work.
